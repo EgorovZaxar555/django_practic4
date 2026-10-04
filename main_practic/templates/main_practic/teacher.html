@@ -1,0 +1,21 @@
+{% extends 'main_practic/base.html' %}
+{% block title %}Кабинет преподавателя{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">Кабинет преподавателя</h1>
+    <p>Здравствуйте, <b>{{ user.username }}</b>!</p>
+
+    {% if user.teacher_profile %}
+      <div class="row">
+        <div class="col-md-9">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Кафедра: {{ user.teacher_profile.department|default:"—" }}</li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

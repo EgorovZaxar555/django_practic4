@@ -1,0 +1,40 @@
+{% extends 'main_practic/base.html' %}
+{% block title %}Список студентов{% endblock %}
+
+{% block content %}
+<h2>Список студентов</h2>
+
+<form method="get" class="mb-3">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+    <a href="?" class="btn btn-secondary">Сбросить</a>
+</form>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <p class="mb-0">Исправьте ошибки в фильтрах:</p>
+        {{ form.errors }}
+    </div>
+{% endif %}
+
+{% if students %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Группа</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+                <tr>
+                    <td>{{ s.user.get_full_name|default:s.user.username }}</td>
+                    <td>{{ s.group.name|default:"—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Ничего не найдено.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'main_practic/base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+  <h1 class="display-5 fw-bold">Добро пожаловать</h1>
+  <p class="lead">Учебный проект: роли «студент» и «преподаватель».</p>
+
+  {% if user.is_authenticated %}
+    <a class="btn btn-primary btn-lg" href="{% url 'role-redirect' %}">
+      Перейти в личный кабинет
+    </a>
+  {% else %}
+    <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Войти</a>
+  {% endif %}
+</div>
+{% endblock %}

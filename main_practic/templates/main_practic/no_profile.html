@@ -1,0 +1,12 @@
+{% extends 'main_practic/base.html' %}
+{% block title %}Профиль не настроен{% endblock %}
+
+{% block content %}
+<div class="alert alert-info">
+  <h1 class="h4">Профиль не настроен</h1>
+  <p class="mb-0">
+    Для пользователя <b>{{ user.username }}</b> не создан ни профиль студента,
+    ни профиль преподавателя. Обратитесь к администратору.
+  </p>
+</div>
+{% endblock %}

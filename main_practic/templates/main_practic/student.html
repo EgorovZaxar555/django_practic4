@@ -1,0 +1,33 @@
+{% extends 'main_practic/base.html' %}
+{% block title %}Кабинет студента{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">Кабинет студента</h1>
+    <p>Здравствуйте, <b>{{ user.username }}</b>!</p>
+
+    {% if user.student_profile %}
+      <div class="row">
+        <div class="col-md-3 text-center mb-3">
+          <img src="{{ user.student_profile.avatar.url }}"
+               alt="Аватар"
+               class="img-fluid rounded"
+               style="max-width: 180px;">
+        </div>
+
+        <div class="col-md-9">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Группа: {{ user.student_profile.group.name|default:"—" }}</li>
+            <li class="list-group-item">Год поступления: {{ user.student_profile.enrollment_year|default:"—" }}</li>
+          </ul>
+
+          <a class="btn btn-primary mt-3" href="{% url 'main_practic:avatar-update' %}">
+            Обновить аватар
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
