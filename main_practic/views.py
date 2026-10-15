@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import redirect, render
 from .forms import StudentAvatarForm, StudentFilterForm
 from .models import Student
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def home(request):
@@ -77,8 +78,22 @@ def student_avatar_update(request):
 # список студентов с GET-фильтрами
 
 def student_list(request):
+    student_qs = Student.objects.all().order_by('last_name')
+    paginator = Paginator(student_qs, 10)
+    page_number = request.GET.get('page')  
     form = StudentFilterForm(request.GET or None)
     students = Student.objects.select_related('user', 'group').all()
+    
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # Если page не указан или не число – показываем первую страницу
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, 'attendance/student_list.html', {'page_obj': page_obj})
+
+
 
     if form.is_valid():
         cd = form.cleaned_data
